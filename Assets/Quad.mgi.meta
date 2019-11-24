@@ -10,5 +10,5 @@ ScriptedImporter:
   script: {fileID: 11500000, guid: a8b5f06e412d587cbac1226722904238, type: 3}
   _width: 1
   _height: 1
-  _axis: 0
+  _axis: 2
   _doubleSided: 1
