@@ -2,8 +2,8 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEditor;
 using UnityEditor.Experimental.AssetImporters;
-using Path = System.IO.Path;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Mgi
 {
@@ -12,10 +12,14 @@ namespace Mgi
     {
         #region ScriptedImporter implementation
 
+        public enum Model { Quad, Box }
+
         public enum Axis { X, Y, Z }
 
+        [SerializeField] Model _model = Model.Box;
         [SerializeField] float _width = 1;
         [SerializeField] float _height = 1;
+        [SerializeField] float _depth = 1;
         [SerializeField] Axis _axis = Axis.Z;
         [SerializeField] bool _doubleSided = true;
 
@@ -44,11 +48,22 @@ namespace Mgi
         Mesh ImportAsMesh(string path)
         {
             var mesh = new Mesh();
-            mesh.name = Path.GetFileNameWithoutExtension(path);
-            GenerateQuad(mesh, _width, _height, _axis, _doubleSided);
+            mesh.name = "Mesh";
+
+            switch (_model)
+            {
+            case Model.Quad:
+                GenerateQuad(mesh, _width, _height, _axis, _doubleSided);
+                break;
+            case Model.Box:
+                GenerateBox(mesh, _width, _height, _depth);
+                break;
+            }
+
             mesh.RecalculateNormals();
             mesh.RecalculateBounds();
             mesh.UploadMeshData(true);
+
             return mesh;
         }
 
@@ -103,6 +118,49 @@ namespace Mgi
 
             mesh.SetVertices(vtx);
             mesh.SetUVs(0, uv0);
+            mesh.SetIndices(idx, MeshTopology.Triangles, 0);
+        }
+
+        static void GenerateBox(Mesh mesh, float width, float height, float depth)
+        {
+            var x = width / 2;
+            var y = height / 2;
+            var z = depth / 2;
+
+            var v0 = new Vector3(-x, -y, -z);
+            var v1 = new Vector3( x, -y, -z);
+            var v2 = new Vector3(-x, -y,  z);
+            var v3 = new Vector3( x, -y,  z);
+
+            var v4 = new Vector3(-x,  y, -z);
+            var v5 = new Vector3( x,  y, -z);
+            var v6 = new Vector3(-x,  y,  z);
+            var v7 = new Vector3( x,  y,  z);
+
+            var vtx = new List<Vector3>();
+            var uv0 = new List<Vector2>();
+
+            vtx.Add(v0); vtx.Add(v1); vtx.Add(v2);
+            vtx.Add(v1); vtx.Add(v3); vtx.Add(v2);
+
+            vtx.Add(v4); vtx.Add(v6); vtx.Add(v5);
+            vtx.Add(v5); vtx.Add(v6); vtx.Add(v7);
+
+            vtx.Add(v0); vtx.Add(v4); vtx.Add(v1);
+            vtx.Add(v1); vtx.Add(v4); vtx.Add(v5);
+
+            vtx.Add(v1); vtx.Add(v5); vtx.Add(v3);
+            vtx.Add(v3); vtx.Add(v5); vtx.Add(v7);
+
+            vtx.Add(v2); vtx.Add(v6); vtx.Add(v0);
+            vtx.Add(v0); vtx.Add(v6); vtx.Add(v4);
+
+            vtx.Add(v3); vtx.Add(v7); vtx.Add(v2);
+            vtx.Add(v2); vtx.Add(v7); vtx.Add(v6);
+
+            var idx = Enumerable.Range(0, vtx.Count).ToList();
+
+            mesh.SetVertices(vtx);
             mesh.SetIndices(idx, MeshTopology.Triangles, 0);
         }
 
