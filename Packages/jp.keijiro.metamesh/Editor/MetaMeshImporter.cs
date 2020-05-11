@@ -5,10 +5,10 @@ using UnityEditor.Experimental.AssetImporters;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mgi
+namespace MetaMesh
 {
-    [ScriptedImporter(1, "mgi")]
-    class MgiImporter : ScriptedImporter
+    [ScriptedImporter(1, "metamesh")]
+    class MetaMeshImporter : ScriptedImporter
     {
         #region ScriptedImporter implementation
 

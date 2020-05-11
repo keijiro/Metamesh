@@ -1,0 +1,13 @@
+{
+  "author": "Keijiro Takahashi",
+  "description": "Metadata-only mesh data importer",
+  "displayName": "MetaMesh",
+  "keywords": [ "unity" ],
+  "license": "Unlicense",
+  "name": "jp.keijiro.metamesh",
+  "repository": "github:keijiro/MetaMesh",
+  "unity": "2019.3",
+  "unityRelease": "0f1",
+  "version": "0.0.1"
+}
+
