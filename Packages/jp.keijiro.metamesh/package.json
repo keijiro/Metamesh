@@ -1,5 +1,6 @@
 {
   "author": "Keijiro Takahashi",
+  "dependencies": { "com.unity.mathematics": "1.1.0" },
   "description": "Metadata-only mesh data importer",
   "displayName": "MetaMesh",
   "keywords": [ "unity" ],

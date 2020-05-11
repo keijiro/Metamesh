@@ -10,7 +10,7 @@ namespace MetaMesh
         #region ScriptedImporter implementation
 
         [SerializeField] Shape _shape = Shape.Box;
-        [SerializeField] Quad _quad = null;
+        [SerializeField] Plane _plane = null;
         [SerializeField] Box _box = null;
 
         public override void OnImportAsset(AssetImportContext context)
@@ -42,8 +42,8 @@ namespace MetaMesh
 
             switch (_shape)
             {
-                case Shape.Quad: _quad.Generate(mesh); break;
-                case Shape.Box : _box .Generate(mesh); break;
+                case Shape.Plane: _plane.Generate(mesh); break;
+                case Shape.Box  : _box  .Generate(mesh); break;
             }
 
             mesh.RecalculateNormals();
