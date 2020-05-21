@@ -16,7 +16,7 @@ ScriptedImporter:
     Subdivisions:
       x: 2
       y: 2
-    Axis: 1
+    Axis: 0
     DoubleSided: 0
   _box:
     Width: 1

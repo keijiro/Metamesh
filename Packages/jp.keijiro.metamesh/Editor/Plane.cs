@@ -20,11 +20,23 @@ namespace Metamesh
             var res = (int2)math.max(2, Subdivisions);
 
             // X/Y vectors perpendicular to Axis
-            var vx = float3.zero;
-            var vy = float3.zero;
+            float3 vx, vy;
 
-            vx[((int)Axis + 1) % 3] = Size.x / 2;
-            vy[((int)Axis + 2) % 3] = Size.y / 2;
+            if (Axis == Axis.X)
+            {
+                vx = math.float3(0, 0, 1);
+                vy = math.float3(0, 1, 0);
+            }
+            else if (Axis == Axis.Y)
+            {
+                vx = math.float3(1, 0, 0);
+                vy = math.float3(0, 0, 1);
+            }
+            else // Axis.Z
+            {
+                vx = math.float3(-1, 0, 0);
+                vy = math.float3(0, 1, 0);
+            }
 
             // Vertex array
             var vtx = new List<float3>();
@@ -60,12 +72,12 @@ namespace Metamesh
                 for (var ix = 0; ix < res.x - 1; ix++, i++)
                 {
                     idx.Add(i);
-                    idx.Add(i + 1);
                     idx.Add(i + res.x);
+                    idx.Add(i + 1);
 
                     idx.Add(i + 1);
-                    idx.Add(i + res.x + 1);
                     idx.Add(i + res.x);
+                    idx.Add(i + res.x + 1);
                 }
             }
 
@@ -78,12 +90,12 @@ namespace Metamesh
                     for (var ix = 0; ix < res.x - 1; ix++, i++)
                     {
                         idx.Add(i);
-                        idx.Add(i + res.x);
                         idx.Add(i + 1);
+                        idx.Add(i + res.x);
 
                         idx.Add(i + 1);
-                        idx.Add(i + res.x);
                         idx.Add(i + res.x + 1);
+                        idx.Add(i + res.x);
                     }
                 }
             }
