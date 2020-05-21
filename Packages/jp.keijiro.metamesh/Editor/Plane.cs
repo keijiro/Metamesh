@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
@@ -88,6 +89,7 @@ namespace Metamesh
             }
 
             // Mesh object construction
+            if (vtx.Count > 65535) mesh.indexFormat = IndexFormat.UInt32;
             mesh.SetVertices(vtx.Select(v => (Vector3)v).ToList());
             mesh.SetUVs(0, uv0.Select(v => (Vector2)v).ToList());
             mesh.SetIndices(idx, MeshTopology.Triangles, 0);
