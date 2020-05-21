@@ -35,5 +35,9 @@ namespace Metamesh
             ApplyRevertGUI();
         }
 
+        [MenuItem("Assets/Create/Metamesh")]
+        public static void CreateBox()
+          => ProjectWindowUtil.CreateAssetWithContent
+               ("New Metamesh.metamesh", "");
     }
 }

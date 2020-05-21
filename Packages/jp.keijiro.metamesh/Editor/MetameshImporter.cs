@@ -11,7 +11,7 @@ namespace Metamesh
 
         [SerializeField] Shape _shape = Shape.Box;
         [SerializeField] Plane _plane = null;
-        [SerializeField] Box _box = null;
+        [SerializeField] Box _box = new Box();
 
         public override void OnImportAsset(AssetImportContext context)
         {
