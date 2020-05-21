@@ -1,4 +1,4 @@
-namespace MetaMesh
+namespace Metamesh
 {
     public enum Shape { Plane, Box }
     public enum Axis { X, Y, Z }

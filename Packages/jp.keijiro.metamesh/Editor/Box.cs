@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MetaMesh
+namespace Metamesh
 {
     [System.Serializable]
     public class Box

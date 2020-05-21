@@ -2,10 +2,10 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.Experimental.AssetImporters;
 
-namespace MetaMesh
+namespace Metamesh
 {
     [ScriptedImporter(1, "metamesh")]
-    public sealed class MetaMeshImporter : ScriptedImporter
+    public sealed class MetameshImporter : ScriptedImporter
     {
         #region ScriptedImporter implementation
 

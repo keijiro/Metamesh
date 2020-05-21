@@ -2,10 +2,10 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.Experimental.AssetImporters;
 
-namespace MetaMesh
+namespace Metamesh
 {
-    [CustomEditor(typeof(MetaMeshImporter))]
-    sealed class MetaMeshImporterEditor : ScriptedImporterEditor
+    [CustomEditor(typeof(MetameshImporter))]
+    sealed class MetameshImporterEditor : ScriptedImporterEditor
     {
         SerializedProperty _shape;
         SerializedProperty _plane;
