@@ -38,6 +38,9 @@ namespace Metamesh
                 vy = math.float3(0, 1, 0);
             }
 
+            vx *= Size.x;
+            vy *= Size.y;
+
             // Vertex array
             var vtx = new List<float3>();
             var uv0 = new List<float2>();
