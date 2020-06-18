@@ -108,6 +108,7 @@ namespace Metamesh
             mesh.SetVertices(vtx.Select(v => (Vector3)v).ToList());
             mesh.SetUVs(0, uv0.Select(v => (Vector2)v).ToList());
             mesh.SetIndices(idx, MeshTopology.Triangles, 0);
+            mesh.RecalculateNormals();
         }
     }
 }

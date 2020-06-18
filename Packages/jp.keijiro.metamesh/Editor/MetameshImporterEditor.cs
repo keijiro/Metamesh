@@ -10,13 +10,15 @@ namespace Metamesh
         SerializedProperty _shape;
         SerializedProperty _plane;
         SerializedProperty _box;
+        SerializedProperty _sphere;
 
         public override void OnEnable()
         {
             base.OnEnable();
-            _shape = serializedObject.FindProperty("_shape");
-            _plane = serializedObject.FindProperty("_plane");
-            _box   = serializedObject.FindProperty("_box");
+            _shape  = serializedObject.FindProperty("_shape");
+            _plane  = serializedObject.FindProperty("_plane");
+            _box    = serializedObject.FindProperty("_box");
+            _sphere = serializedObject.FindProperty("_sphere");
         }
 
         public override void OnInspectorGUI()
@@ -27,8 +29,9 @@ namespace Metamesh
 
             switch ((Shape)_shape.enumValueIndex)
             {
-                case Shape.Plane: EditorGUILayout.PropertyField(_plane); break;
-                case Shape.Box  : EditorGUILayout.PropertyField(_box);   break;
+                case Shape.Plane : EditorGUILayout.PropertyField(_plane);  break;
+                case Shape.Box   : EditorGUILayout.PropertyField(_box);    break;
+                case Shape.Sphere: EditorGUILayout.PropertyField(_sphere); break;
             }
 
             serializedObject.ApplyModifiedProperties();
@@ -36,7 +39,7 @@ namespace Metamesh
         }
 
         [MenuItem("Assets/Create/Metamesh")]
-        public static void CreateBox()
+        public static void CreateNewAsset()
           => ProjectWindowUtil.CreateAssetWithContent
                ("New Metamesh.metamesh", "");
     }

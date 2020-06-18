@@ -73,6 +73,7 @@ namespace Metamesh
             mesh.SetVertices(vtx);
             mesh.SetUVs(0, uv0);
             mesh.SetIndices(idx, MeshTopology.Triangles, 0);
+            mesh.RecalculateNormals();
         }
     }
 }
