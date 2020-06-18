@@ -14,7 +14,7 @@ public sealed class Icosphere
     public void Generate(Mesh mesh)
     {
         var builder = new IcosphereBuilder();
-        for (var i = 0; i < Subdivision; i++)
+        for (var i = 1; i < Subdivision; i++)
             builder = new IcosphereBuilder(builder);
 
         var vtx = builder.Vertices.Select(v => (Vector3)(v * Radius));
