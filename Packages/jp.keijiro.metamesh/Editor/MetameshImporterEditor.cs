@@ -12,6 +12,7 @@ namespace Metamesh
         SerializedProperty _box;
         SerializedProperty _sphere;
         SerializedProperty _icosphere;
+        SerializedProperty _cylinder;
 
         public override void OnEnable()
         {
@@ -21,6 +22,7 @@ namespace Metamesh
             _box       = serializedObject.FindProperty("_box");
             _sphere    = serializedObject.FindProperty("_sphere");
             _icosphere = serializedObject.FindProperty("_icosphere");
+            _cylinder  = serializedObject.FindProperty("_cylinder");
         }
 
         public override void OnInspectorGUI()
@@ -35,6 +37,7 @@ namespace Metamesh
                 case Shape.Box      : EditorGUILayout.PropertyField(_box);       break;
                 case Shape.Sphere   : EditorGUILayout.PropertyField(_sphere);    break;
                 case Shape.Icosphere: EditorGUILayout.PropertyField(_icosphere); break;
+                case Shape.Cylinder : EditorGUILayout.PropertyField(_cylinder);  break;
             }
 
             serializedObject.ApplyModifiedProperties();

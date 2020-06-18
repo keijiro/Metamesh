@@ -14,6 +14,7 @@ namespace Metamesh
         [SerializeField] Box _box = new Box();
         [SerializeField] Sphere _sphere = new Sphere();
         [SerializeField] Icosphere _icosphere = new Icosphere();
+        [SerializeField] Cylinder _cylinder = new Cylinder();
 
         public override void OnImportAsset(AssetImportContext context)
         {
@@ -48,6 +49,7 @@ namespace Metamesh
                 case Shape.Box       : _box      .Generate(mesh); break;
                 case Shape.Sphere    : _sphere   .Generate(mesh); break;
                 case Shape.Icosphere : _icosphere.Generate(mesh); break;
+                case Shape.Cylinder  : _cylinder .Generate(mesh); break;
             }
 
             mesh.RecalculateBounds();

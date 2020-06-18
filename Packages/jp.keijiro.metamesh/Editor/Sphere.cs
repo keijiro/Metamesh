@@ -17,37 +17,38 @@ public class Sphere
     public void Generate(Mesh mesh)
     {
         // Parameter sanitization
-        var res = math.max(3, math.int2((int)Columns, (int)Rows));
+        var res = math.int2((int)Columns, (int)Rows);
+        res = math.max(res, math.int2(3, 2));
 
         // Axis selection
-        var v0 = float3.zero;
-        var ax = float3.zero;
-        var ay = float3.zero;
+        var va = float3.zero;
+        var vx = float3.zero;
+        var vy = float3.zero;
 
         var ai = (int)Axis;
 
-        v0[(ai + 2) % 3] = 1;
-        ax[(ai + 0) % 3] = 1;
-        ay[(ai + 1) % 3] = 1;
+        va[(ai + 2) % 3] = 1;
+        vx[(ai + 0) % 3] = 1;
+        vy[(ai + 1) % 3] = 1;
 
         // Vertex array
         var vtx = new List<float3>();
         var nrm = new List<float3>();
         var uv0 = new List<float2>();
 
-        for (var iy = 0; iy < res.y; iy++)
+        for (var iy = 0; iy < res.y + 1; iy++)
         {
             for (var ix = 0; ix < res.x + 1; ix++)
             {
                 var u = (float)ix / res.x;
-                var v = (float)iy / (res.y - 1);
+                var v = (float)iy / res.y;
 
                 var theta = u * math.PI * 2;
                 var phi = (v - 0.5f) * math.PI;
 
-                var rx = quaternion.AxisAngle(-ax, theta);
-                var ry = quaternion.AxisAngle(ay, phi);
-                var p = math.mul(rx, math.mul(ry, v0));
+                var rx = quaternion.AxisAngle(-vx, theta);
+                var ry = quaternion.AxisAngle(vy, phi);
+                var p = math.mul(rx, math.mul(ry, va));
 
                 vtx.Add(p * Radius);
                 nrm.Add(p);
@@ -59,7 +60,7 @@ public class Sphere
         var idx = new List<int>();
         var i = 0;
 
-        for (var iy = 0; iy < res.y - 1; iy++, i++)
+        for (var iy = 0; iy < res.y; iy++, i++)
         {
             for (var ix = 0; ix < res.x; ix++, i++)
             {
