@@ -15,6 +15,7 @@ At the moment, it only supports very basic primitive shapes.
 - Box
 - Sphere (UV sphere)
 - Icosphere
+- Cylinder
 
 How To Install
 --------------
