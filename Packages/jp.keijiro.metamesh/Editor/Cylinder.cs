@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 using Unity.Mathematics;
 
 namespace Metamesh {
@@ -9,7 +10,8 @@ namespace Metamesh {
 [System.Serializable]
 public sealed class Cylinder
 {
-    public float Radius = 1;
+    [FormerlySerializedAs("Radius")] public float TopRadius = 1;
+    [FormerlySerializedAs("Radius")] public float BottomRadius = 1;
     public float Height = 1;
     public uint Columns = 24;
     public uint Rows = 12;
@@ -31,6 +33,10 @@ public sealed class Cylinder
         va[(ai + 0) % 3] = 1;
         vx[(ai + 1) % 3] = 1;
 
+        // Normal vector for the first vertex
+        var edge = (TopRadius - BottomRadius) * vx + Height * va;
+        var n0 = math.normalize(math.cross(math.cross(va, vx), edge));
+
         // Vertex array
         var vtx = new List<float3>();
         var nrm = new List<float3>();
@@ -44,9 +50,10 @@ public sealed class Cylinder
                 var u = (float)ix / res.x;
                 var v = (float)iy / res.y;
 
+                var r = math.lerp(BottomRadius, TopRadius, v);
                 var rot = quaternion.AxisAngle(va, u * math.PI * -2);
-                var n = math.mul(rot, vx);
-                var p = n * Radius + va * (v - 0.5f) * Height;
+                var n = math.mul(rot, n0);
+                var p = math.mul(rot, vx) * r + va * (v - 0.5f) * Height;
 
                 vtx.Add(p);
                 nrm.Add(n);
@@ -71,10 +78,10 @@ public sealed class Cylinder
                 var u = (float)ix / res.x * math.PI * 2;
 
                 var rot = quaternion.AxisAngle(va, -u);
-                var p = math.mul(rot, vx) * Radius;
+                var p = math.mul(rot, vx);
 
-                vtx.Add(p + va * Height / -2);
-                vtx.Add(p + va * Height / +2);
+                vtx.Add(p * BottomRadius + va * Height / -2);
+                vtx.Add(p * TopRadius    + va * Height / +2);
 
                 nrm.Add(-va);
                 nrm.Add(+va);
