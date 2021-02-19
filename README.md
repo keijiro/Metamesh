@@ -38,7 +38,7 @@ To the `scopedRegistries` section:
 To the `dependencies` section:
 
 ```
-"jp.keijiro.metamesh": "0.0.7"
+"jp.keijiro.metamesh": "0.0.8"
 ```
 
 After changes, the manifest file should look like below:
@@ -53,6 +53,6 @@ After changes, the manifest file should look like below:
     }
   ],
   "dependencies": {
-    "jp.keijiro.metamesh": "0.0.7",
+    "jp.keijiro.metamesh": "0.0.8",
 ...
 ```
