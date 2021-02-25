@@ -20,8 +20,8 @@ public class RoundedBox
     // It only makes points on rounded corners but not on flat surfaces.
     float GetEdgePoint(int i, float length)
       => i <= Divisions ?
-        -0.5f * length + Radius * (i                    ) / Divisions :
-         0.5f * length + Radius * (i - Divisions * 2 - 1) / Divisions;
+            Radius / length * (i                    ) / Divisions :
+        1 + Radius / length * (i - Divisions * 2 - 1) / Divisions;
 
     // Move a point onto a rounded curve. Used to bend a flat plane into a
     // rounded surface.
@@ -34,17 +34,20 @@ public class RoundedBox
     }
 
     // Single plane construction function.
-    List<(float3, float3)> MakePlane(float4 ax, float4 ay, float3 offs)
+    List<(float3, float3, float2)> MakePlane(float4 ax, float4 ay, float3 offs)
     {
         var vc_edge = 2 + Divisions * 2;
-        var vtx = new List<(float3, float3)>();
+        var vtx = new List<(float3, float3, float2)>();
         for (var iy = 0; iy < vc_edge; iy++)
         {
-            float y = GetEdgePoint(iy, ay.w);
+            var v = GetEdgePoint(iy, ay.w);
+            var y = ay.xyz * (v - 0.5f) * ay.w;
             for (var ix = 0; ix < vc_edge; ix++)
             {
-                float x = GetEdgePoint(ix, ax.w);
-                vtx.Add(RoundPoint(ax.xyz * x + ay.xyz * y + offs));
+                var u = GetEdgePoint(ix, ax.w);
+                var x = ax.xyz * (u - 0.5f) * ax.w;
+                var (p, n) = RoundPoint(x + y + offs);
+                vtx.Add((p, n, math.float2(u, v)));
             }
         }
         return vtx;
@@ -55,7 +58,7 @@ public class RoundedBox
         var vc_edge = 2 + Divisions * 2;
 
         // Vertex array construction
-        var vtx = new List<(float3 p, float3 n)>();
+        var vtx = new List<(float3 p, float3 n, float2 uv)>();
         vtx.AddRange(MakePlane(math.float4( 1, 0, 0, Width), math.float4(0,  1, 0, Height), math.float3(0, 0, -0.5f * Depth)));
         vtx.AddRange(MakePlane(math.float4(-1, 0, 0, Width), math.float4(0,  1, 0, Height), math.float3(0, 0,  0.5f * Depth)));
         vtx.AddRange(MakePlane(math.float4(0, 0,  1, Depth), math.float4(0, -1, 0, Height), math.float3(-0.5f * Width, 0, 0)));
@@ -89,6 +92,7 @@ public class RoundedBox
         if (vtx.Count > 65535) mesh.indexFormat = IndexFormat.UInt32;
         mesh.SetVertices(vtx.Select(v => (Vector3)v.p).ToList());
         mesh.SetNormals(vtx.Select(v => (Vector3)v.n).ToList());
+        mesh.SetUVs(0, vtx.Select(v => (Vector2)v.uv).ToList());
         mesh.SetIndices(idx, MeshTopology.Triangles, 0);
     }
 }
