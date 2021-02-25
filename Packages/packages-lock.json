@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.unity.mathematics": {
-      "version": "1.1.0",
+      "version": "1.2.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
@@ -12,7 +12,7 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.unity.mathematics": "1.1.0"
+        "com.unity.mathematics": "1.2.1"
       }
     }
   }

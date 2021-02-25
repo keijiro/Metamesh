@@ -1,6 +1,6 @@
 {
   "author": "Keijiro Takahashi",
-  "dependencies": { "com.unity.mathematics": "1.1.0" },
+  "dependencies": { "com.unity.mathematics": "1.2.1" },
   "description": "Metadata-only mesh data importer",
   "displayName": "Metamesh",
   "keywords": [ "unity" ],
@@ -9,6 +9,6 @@
   "repository": "github:keijiro/Metamesh",
   "unity": "2019.4",
   "unityRelease": "0f1",
-  "version": "0.0.8"
+  "version": "1.0.0"
 }
 
