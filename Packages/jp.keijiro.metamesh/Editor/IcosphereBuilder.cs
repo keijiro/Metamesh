@@ -2,6 +2,7 @@
 using Unity.Mathematics;
 using System.Collections.Generic;
 using System.Linq;
+using Metamesh.Smoothing;
 using UnityEngine;
 
 namespace Metamesh

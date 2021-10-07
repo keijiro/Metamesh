@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using Metamesh.Smoothing;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 using Unity.Mathematics;
 
-namespace Metamesh {
+namespace Metamesh
+{
 
 [System.Serializable]
 public sealed class Cylinder
@@ -17,6 +19,7 @@ public sealed class Cylinder
     public uint Rows = 12;
     public Axis Axis = Axis.Y;
     public bool Caps = true;
+    public SmoothingSettings SmoothingSettings;
 
     public void Generate(Mesh mesh)
     {
@@ -81,7 +84,7 @@ public sealed class Cylinder
                 var p = math.mul(rot, vx);
 
                 vtx.Add(p * BottomRadius + va * Height / -2);
-                vtx.Add(p * TopRadius    + va * Height / +2);
+                vtx.Add(p * TopRadius + va * Height / +2);
 
                 nrm.Add(-va);
                 nrm.Add(+va);
@@ -94,19 +97,20 @@ public sealed class Cylinder
         // Index array
         var idx = new List<int>();
         var i = 0;
+        var smoothingProcessor = new SmoothingProcessorUv<float3, float2>(SmoothingSettings, vtx, uv0);
 
         // (Body indices)
         for (var iy = 0; iy < res.y; iy++, i++)
         {
             for (var ix = 0; ix < res.x; ix++, i++)
             {
-                idx.Add(i);
-                idx.Add(i + res.x + 1);
-                idx.Add(i + 1);
+                smoothingProcessor.AddIndex(idx, i);
+                smoothingProcessor.AddIndex(idx, i + res.x + 1);
+                smoothingProcessor.AddIndex(idx, i + 1);
 
-                idx.Add(i + 1);
-                idx.Add(i + res.x + 1);
-                idx.Add(i + res.x + 2);
+                smoothingProcessor.AddIndex(idx, i + 1);
+                smoothingProcessor.AddIndex(idx, i + res.x + 1);
+                smoothingProcessor.AddIndex(idx, i + res.x + 2);
             }
         }
 
@@ -117,30 +121,31 @@ public sealed class Cylinder
 
             for (var ix = 0; ix < (res.x - 1) * 2; ix += 2)
             {
-                idx.Add(i);
-                idx.Add(i + ix + 2);
-                idx.Add(i + ix + 4);
+                smoothingProcessor.AddIndex(idx, i);
+                smoothingProcessor.AddIndex(idx, i + ix + 2);
+                smoothingProcessor.AddIndex(idx, i + ix + 4);
 
-                idx.Add(i + 1);
-                idx.Add(i + ix + 5);
-                idx.Add(i + ix + 3);
+                smoothingProcessor.AddIndex(idx, i + 1);
+                smoothingProcessor.AddIndex(idx, i + ix + 5);
+                smoothingProcessor.AddIndex(idx, i + ix + 3);
             }
 
-            idx.Add(i);
-            idx.Add(i + res.x * 2);
-            idx.Add(i + 2);
+            smoothingProcessor.AddIndex(idx, i);
+            smoothingProcessor.AddIndex(idx, i + res.x * 2);
+            smoothingProcessor.AddIndex(idx, i + 2);
 
-            idx.Add(i + 1);
-            idx.Add(i + 3);
-            idx.Add(i + 1 + res.x * 2);
+            smoothingProcessor.AddIndex(idx, i + 1);
+            smoothingProcessor.AddIndex(idx, i + 3);
+            smoothingProcessor.AddIndex(idx, i + 1 + res.x * 2);
         }
 
         // Mesh object construction
         if (vtx.Count > 65535) mesh.indexFormat = IndexFormat.UInt32;
         mesh.SetVertices(vtx.Select(v => (Vector3)v).ToList());
-        mesh.SetNormals(nrm.Select(v => (Vector3)v).ToList());
+
         mesh.SetUVs(0, uv0.Select(v => (Vector2)v).ToList());
         mesh.SetIndices(idx, MeshTopology.Triangles, 0);
+        mesh.WriteNormals(SmoothingSettings, m => m.SetNormals(nrm.Select(v => (Vector3)v).ToList()));
     }
 }
 

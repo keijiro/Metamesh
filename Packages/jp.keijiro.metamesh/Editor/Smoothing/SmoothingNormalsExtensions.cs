@@ -1,10 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Metamesh
+namespace Metamesh.Smoothing
 {
 
-public static class NormalsUtils
+public static class SmoothingNormalsExtensions
 {
     public static void WriteNormals(this Mesh mesh, SmoothingSettings smoothingSettings, Action<Mesh> fallbackWriteNormals)
     {

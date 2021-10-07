@@ -1,18 +1,8 @@
-﻿using System;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
-namespace Metamesh
+namespace Metamesh.Smoothing
 {
-
-[Serializable]
-public class SmoothingSettings
-{
-    public bool ConfigureSmoothingAngle;
-    [Min(0)]
-    public float SmoothingAngle;
-}
-
 
 [CustomPropertyDrawer(typeof(SmoothingSettings))]
 public class SmoothingSettingsPropertyDrawer : PropertyDrawer

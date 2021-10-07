@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Metamesh.Smoothing;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Unity.Mathematics;
@@ -68,16 +69,16 @@ public class Sphere
             {
                 if (iy > 0)
                 {
-                    smoothingVertexProcessor.AddIndex(i, idx);
-                    smoothingVertexProcessor.AddIndex(i + res.x + 1, idx);
-                    smoothingVertexProcessor.AddIndex(i + 1, idx);
+                    smoothingVertexProcessor.AddIndex(idx, i);
+                    smoothingVertexProcessor.AddIndex(idx, i + res.x + 1);
+                    smoothingVertexProcessor.AddIndex(idx, i + 1);
                 }
 
                 if (iy < res.y - 1)
                 {
-                    smoothingVertexProcessor.AddIndex(i + 1, idx);
-                    smoothingVertexProcessor.AddIndex(i + res.x + 1, idx);
-                    smoothingVertexProcessor.AddIndex(i + res.x + 2, idx);
+                    smoothingVertexProcessor.AddIndex(idx, i + 1);
+                    smoothingVertexProcessor.AddIndex(idx, i + res.x + 1);
+                    smoothingVertexProcessor.AddIndex(idx, i + res.x + 2);
                 }
             }
         }

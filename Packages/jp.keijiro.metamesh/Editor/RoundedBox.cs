@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections.Generic;
 using System.Linq;
+using Metamesh.Smoothing;
 using Unity.Mathematics;
 
 namespace Metamesh {
@@ -78,13 +79,13 @@ public class RoundedBox
                 for (var ix = 0; ix < vc_edge - 1; ix++, i++)
                 {
                     // Lower triangle
-                    smoothingVertexProcessor.AddIndex(i, idx);
-                    smoothingVertexProcessor.AddIndex(i + vc_edge, idx);
-                    smoothingVertexProcessor.AddIndex(i + 1, idx);
+                    smoothingVertexProcessor.AddIndex(idx, i);
+                    smoothingVertexProcessor.AddIndex(idx, i + vc_edge);
+                    smoothingVertexProcessor.AddIndex(idx, i + 1);
                     // Upper triangle
-                    smoothingVertexProcessor.AddIndex(i + 1, idx);
-                    smoothingVertexProcessor.AddIndex(i + vc_edge, idx);
-                    smoothingVertexProcessor.AddIndex(i + vc_edge + 1, idx);
+                    smoothingVertexProcessor.AddIndex(idx, i + 1);
+                    smoothingVertexProcessor.AddIndex(idx, i + vc_edge);
+                    smoothingVertexProcessor.AddIndex(idx, i + vc_edge + 1);
                 }
             }
             i += vc_edge;
