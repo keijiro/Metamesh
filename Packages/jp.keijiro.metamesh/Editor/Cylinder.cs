@@ -144,4 +144,4 @@ public sealed class Cylinder
     }
 }
 
-}
+} // namespace Metamesh

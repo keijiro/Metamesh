@@ -28,4 +28,4 @@ public sealed class Icosphere
     }
 }
 
-}
+} // namespace Metamesh

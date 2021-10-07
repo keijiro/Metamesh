@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
 
-namespace Metamesh
-{
+namespace Metamesh {
 
 [System.Serializable]
 public class RoundedBox
@@ -97,4 +96,4 @@ public class RoundedBox
     }
 }
 
-}
+} // namespace Metamesh
