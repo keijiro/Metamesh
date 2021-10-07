@@ -1,6 +1,8 @@
-﻿using Unity.Mathematics;
+﻿using System;
+using Unity.Mathematics;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Metamesh
 {
@@ -22,13 +24,13 @@ public sealed class IcosphereBuilder
 
     public IcosphereBuilder(SmoothingSettings smoothingSettings)
     {
-        _smoothingVertexProcessor = CreateSmoothingVertexProcessor(smoothingSettings);
+        _smoothingProcessor = CreateSmoothingVertexProcessor(smoothingSettings);
         BuildInitialInstance();
     }
 
     public IcosphereBuilder(IcosphereBuilder source)
     {
-        _smoothingVertexProcessor = CreateSmoothingVertexProcessor(source._smoothingVertexProcessor.SmoothingSettings);
+        _smoothingProcessor = CreateSmoothingVertexProcessor(source._smoothingProcessor.SmoothingSettings);
         _vertices.AddRange(source._vertices);
 
         var midPoints = new MidpointTable(_vertices);
@@ -46,9 +48,9 @@ public sealed class IcosphereBuilder
         }
     }
 
-    SmoothingVertexProcessor<float3> CreateSmoothingVertexProcessor(SmoothingSettings smoothingSettings)
+    SmoothingProcessor<float3> CreateSmoothingVertexProcessor(SmoothingSettings smoothingSettings)
     {
-        return new SmoothingVertexProcessor<float3>(smoothingSettings, _vertices);
+        return new SmoothingProcessor<float3>(smoothingSettings, _vertices);
     }
 
     #endregion
@@ -57,7 +59,7 @@ public sealed class IcosphereBuilder
 
     List<float3> _vertices = new List<float3>();
     List<(int i1, int i2, int i3)> _triangles = new List<(int, int, int)>();
-    SmoothingVertexProcessor<float3> _smoothingVertexProcessor;
+    SmoothingProcessor<float3> _smoothingProcessor;
 
     #endregion
 
@@ -110,9 +112,9 @@ public sealed class IcosphereBuilder
     void AddTriangle((int i1, int i2, int i3) triangle)
     {
         var (i1, i2, i3) = triangle;
-        i1 = _smoothingVertexProcessor.ProcessVertexIndexForTriangles(i1);
-        i2 = _smoothingVertexProcessor.ProcessVertexIndexForTriangles(i2);
-        i3 = _smoothingVertexProcessor.ProcessVertexIndexForTriangles(i3);
+        i1 = _smoothingProcessor.ProcessVertexIndexForTriangles(i1);
+        i2 = _smoothingProcessor.ProcessVertexIndexForTriangles(i2);
+        i3 = _smoothingProcessor.ProcessVertexIndexForTriangles(i3);
         _triangles.Add((i1, i2, i3));
     }
 

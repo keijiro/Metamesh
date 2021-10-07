@@ -13,6 +13,7 @@ public class SmoothingSettings
     public float SmoothingAngle;
 }
 
+
 [CustomPropertyDrawer(typeof(SmoothingSettings))]
 public class SmoothingSettingsPropertyDrawer : PropertyDrawer
 {

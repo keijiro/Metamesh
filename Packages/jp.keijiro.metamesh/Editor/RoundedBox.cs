@@ -14,6 +14,7 @@ public class RoundedBox
     public float Depth = 1;
     [Range(1, 10)] public int Divisions = 3;
     public float Radius = 0.1f;
+    public SmoothingSettings SmoothingSettings;
 
     // Parameter distribution function used to calculate points on a edge.
     // It only makes points on rounded corners but not on flat surfaces.
@@ -55,6 +56,7 @@ public class RoundedBox
     public void Generate(Mesh mesh)
     {
         var vc_edge = 2 + Divisions * 2;
+        
 
         // Vertex array construction
         var vtx = new List<(float3 p, float3 n, float2 uv)>();
@@ -66,6 +68,7 @@ public class RoundedBox
         vtx.AddRange(MakePlane(math.float4(-1, 0, 0, Width), math.float4(0, 0, -1, Depth), math.float3(0,  0.5f * Height, 0)));
 
         // Index array construction
+        var smoothingVertexProcessor = new SmoothingProcessor<(float3 p, float3 n, float2 uv)>(SmoothingSettings, vtx);
         var idx = new List<int>();
         var i = 0;
         for (var ip = 0; ip < 6; ip++)
@@ -75,13 +78,13 @@ public class RoundedBox
                 for (var ix = 0; ix < vc_edge - 1; ix++, i++)
                 {
                     // Lower triangle
-                    idx.Add(i);
-                    idx.Add(i + vc_edge);
-                    idx.Add(i + 1);
+                    smoothingVertexProcessor.AddIndex(i, idx);
+                    smoothingVertexProcessor.AddIndex(i + vc_edge, idx);
+                    smoothingVertexProcessor.AddIndex(i + 1, idx);
                     // Upper triangle
-                    idx.Add(i + 1);
-                    idx.Add(i + vc_edge);
-                    idx.Add(i + vc_edge + 1);
+                    smoothingVertexProcessor.AddIndex(i + 1, idx);
+                    smoothingVertexProcessor.AddIndex(i + vc_edge, idx);
+                    smoothingVertexProcessor.AddIndex(i + vc_edge + 1, idx);
                 }
             }
             i += vc_edge;
@@ -93,6 +96,7 @@ public class RoundedBox
         mesh.SetNormals(vtx.Select(v => (Vector3)v.n).ToList());
         mesh.SetUVs(0, vtx.Select(v => (Vector2)v.uv).ToList());
         mesh.SetIndices(idx, MeshTopology.Triangles, 0);
+        mesh.WriteNormals(SmoothingSettings, m => m.SetNormals(vtx.Select(v => (Vector3)v.n).ToList()));
     }
 }
 

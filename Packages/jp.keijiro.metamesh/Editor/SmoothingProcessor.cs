@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Metamesh
 {
 
-public class SmoothingVertexProcessor<TVertex>
+public class SmoothingProcessor<TVertex>
 {
     public readonly SmoothingSettings SmoothingSettings;
     private readonly List<TVertex> _vertices;
     private readonly HashSet<int> _usedIndices = new HashSet<int>();
 
-    public SmoothingVertexProcessor(SmoothingSettings smoothingSettings, List<TVertex> vertices)
+    public SmoothingProcessor(SmoothingSettings smoothingSettings, List<TVertex> vertices)
     {
         SmoothingSettings = smoothingSettings;
         _vertices = vertices;
@@ -31,14 +33,20 @@ public class SmoothingVertexProcessor<TVertex>
         return _vertices.Count - 1;
     }
 
+    public void AddIndex(int index, List<int> indices)
+    {
+        index = ProcessVertexIndexForTriangles(index);
+        indices.Add(index);
+    }
+
     protected virtual void OnCreatedVertex(int originalIndex) {}
 }
 
-public class SmoothingVertexProcessorUv<TVertex, TUv> : SmoothingVertexProcessor<TVertex>
+public class SmoothingProcessorUv<TVertex, TUv> : SmoothingProcessor<TVertex>
 {
     private readonly List<TUv> _uvs;
 
-    public SmoothingVertexProcessorUv(SmoothingSettings smoothingSettings, List<TVertex> vertices, List<TUv> uvs) : base(smoothingSettings, vertices)
+    public SmoothingProcessorUv(SmoothingSettings smoothingSettings, List<TVertex> vertices, List<TUv> uvs) : base(smoothingSettings, vertices)
         => _uvs = uvs;
 
     protected override void OnCreatedVertex(int originalIndex)

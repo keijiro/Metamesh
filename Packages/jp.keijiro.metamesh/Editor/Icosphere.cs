@@ -26,10 +26,7 @@ public sealed class Icosphere
         mesh.SetVertices(vtx.ToList());
 
         mesh.SetIndices(idx.ToList(), MeshTopology.Triangles, 0);
-        if (SmoothingSettings.ConfigureSmoothingAngle)
-            mesh.RecalculateNormals(SmoothingSettings.SmoothingAngle);
-        else
-            mesh.SetNormals(nrm.ToList());
+        mesh.WriteNormals(SmoothingSettings, m => m.SetNormals(nrm.ToList()));
     }
 }
 

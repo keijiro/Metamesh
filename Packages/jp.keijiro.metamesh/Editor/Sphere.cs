@@ -60,7 +60,7 @@ public class Sphere
         // Index array
         var idx = new List<int>();
         var i = 0;
-        var smoothingVertexProcessor = new SmoothingVertexProcessorUv<float3, float2>(SmoothingSettings, vtx, uv0);
+        var smoothingVertexProcessor = new SmoothingProcessorUv<float3, float2>(SmoothingSettings, vtx, uv0);
 
         for (var iy = 0; iy < res.y; iy++, i++)
         {
@@ -68,16 +68,16 @@ public class Sphere
             {
                 if (iy > 0)
                 {
-                    AddIndex(i, idx, smoothingVertexProcessor);
-                    AddIndex(i + res.x + 1, idx, smoothingVertexProcessor);
-                    AddIndex(i + 1, idx, smoothingVertexProcessor);
+                    smoothingVertexProcessor.AddIndex(i, idx);
+                    smoothingVertexProcessor.AddIndex(i + res.x + 1, idx);
+                    smoothingVertexProcessor.AddIndex(i + 1, idx);
                 }
 
                 if (iy < res.y - 1)
                 {
-                    AddIndex(i + 1, idx, smoothingVertexProcessor);
-                    AddIndex(i + res.x + 1, idx, smoothingVertexProcessor);
-                    AddIndex(i + res.x + 2, idx, smoothingVertexProcessor);
+                    smoothingVertexProcessor.AddIndex(i + 1, idx);
+                    smoothingVertexProcessor.AddIndex(i + res.x + 1, idx);
+                    smoothingVertexProcessor.AddIndex(i + res.x + 2, idx);
                 }
             }
         }
@@ -87,17 +87,7 @@ public class Sphere
         mesh.SetVertices(vtx.Select(v => (Vector3)v).ToList());
         mesh.SetUVs(0, uv0.Select(v => (Vector2)v).ToList());
         mesh.SetIndices(idx, MeshTopology.Triangles, 0);
-        
-        if (SmoothingSettings.ConfigureSmoothingAngle)
-            mesh.RecalculateNormals(SmoothingSettings.SmoothingAngle);
-        else
-            mesh.SetNormals(nrm.Select(v => (Vector3)v).ToList());
-    }
-
-    void AddIndex(int index, List<int> indices, SmoothingVertexProcessor<float3> smoothingVertexProcessor)
-    {
-        index = smoothingVertexProcessor.ProcessVertexIndexForTriangles(index);
-        indices.Add(index);
+        mesh.WriteNormals(SmoothingSettings, m => m.SetNormals(nrm.Select(v => (Vector3)v).ToList()));
     }
 }
 
