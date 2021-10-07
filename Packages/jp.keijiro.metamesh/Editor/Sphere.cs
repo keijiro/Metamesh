@@ -59,8 +59,8 @@ public class Sphere
 
         // Index array
         var idx = new List<int>();
-        var usedIdx = new HashSet<int>();
         var i = 0;
+        var smoothingVertexProcessor = new SmoothingVertexProcessorUv<float3, float2>(SmoothingSettings, vtx, uv0);
 
         for (var iy = 0; iy < res.y; iy++, i++)
         {
@@ -68,16 +68,16 @@ public class Sphere
             {
                 if (iy > 0)
                 {
-                    AddIndex(i, idx, usedIdx, vtx, uv0);
-                    AddIndex(i + res.x + 1, idx, usedIdx, vtx, uv0);
-                    AddIndex(i + 1, idx, usedIdx, vtx, uv0);
+                    AddIndex(i, idx, smoothingVertexProcessor);
+                    AddIndex(i + res.x + 1, idx, smoothingVertexProcessor);
+                    AddIndex(i + 1, idx, smoothingVertexProcessor);
                 }
 
                 if (iy < res.y - 1)
                 {
-                    AddIndex(i + 1, idx, usedIdx, vtx, uv0);
-                    AddIndex(i + res.x + 1, idx, usedIdx, vtx, uv0);
-                    AddIndex(i + res.x + 2, idx, usedIdx, vtx, uv0);
+                    AddIndex(i + 1, idx, smoothingVertexProcessor);
+                    AddIndex(i + res.x + 1, idx, smoothingVertexProcessor);
+                    AddIndex(i + res.x + 2, idx, smoothingVertexProcessor);
                 }
             }
         }
@@ -94,26 +94,10 @@ public class Sphere
             mesh.SetNormals(nrm.Select(v => (Vector3)v).ToList());
     }
 
-    void AddIndex(int index, List<int> indices, HashSet<int> usedIdx, List<float3> vtx, List<float2> uv0)
+    void AddIndex(int index, List<int> indices, SmoothingVertexProcessor<float3> smoothingVertexProcessor)
     {
-        index = ProcessVertexIndexForTriangles(index, usedIdx, vtx, uv0);
+        index = smoothingVertexProcessor.ProcessVertexIndexForTriangles(index);
         indices.Add(index);
-    }
-    
-    int ProcessVertexIndexForTriangles(int index, HashSet<int> usedIdx, List<float3> vtx, List<float2> uv0)
-    {
-        if (!SmoothingSettings.ConfigureSmoothingAngle)
-            return index;
-        
-        if (!usedIdx.Contains(index))
-        {
-            usedIdx.Add(index);
-            return index;
-        }
-
-        vtx.Add(vtx[index]);
-        uv0.Add(uv0[index]);
-        return vtx.Count - 1;
     }
 }
 

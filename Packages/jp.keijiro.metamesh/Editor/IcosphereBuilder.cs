@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using Unity.Mathematics;
+﻿using Unity.Mathematics;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Metamesh {
+namespace Metamesh
+{
 
 public sealed class IcosphereBuilder
 {
@@ -14,8 +14,7 @@ public sealed class IcosphereBuilder
     public IEnumerable<float3> Vertices => _vertices;
 
     public IEnumerable<int> Indices
-      => _triangles.SelectMany(it => new [] { it.i1, it.i2, it.i3 });
-    public  SmoothingSettings SmoothingSettings { get; }
+        => _triangles.SelectMany(it => new [] { it.i1, it.i2, it.i3 });
 
     #endregion
 
@@ -23,13 +22,13 @@ public sealed class IcosphereBuilder
 
     public IcosphereBuilder(SmoothingSettings smoothingSettings)
     {
-        SmoothingSettings = smoothingSettings;
+        _smoothingVertexProcessor = CreateSmoothingVertexProcessor(smoothingSettings);
         BuildInitialInstance();
     }
 
     public IcosphereBuilder(IcosphereBuilder source)
     {
-        SmoothingSettings = source.SmoothingSettings;
+        _smoothingVertexProcessor = CreateSmoothingVertexProcessor(source._smoothingVertexProcessor.SmoothingSettings);
         _vertices.AddRange(source._vertices);
 
         var midPoints = new MidpointTable(_vertices);
@@ -47,13 +46,18 @@ public sealed class IcosphereBuilder
         }
     }
 
+    SmoothingVertexProcessor<float3> CreateSmoothingVertexProcessor(SmoothingSettings smoothingSettings)
+    {
+        return new SmoothingVertexProcessor<float3>(smoothingSettings, _vertices);
+    }
+
     #endregion
 
     #region Data members
 
     List<float3> _vertices = new List<float3>();
     List<(int i1, int i2, int i3)> _triangles = new List<(int, int, int)>();
-    HashSet<int> _usedIndices = new HashSet<int>();
+    SmoothingVertexProcessor<float3> _smoothingVertexProcessor;
 
     #endregion
 
@@ -106,25 +110,10 @@ public sealed class IcosphereBuilder
     void AddTriangle((int i1, int i2, int i3) triangle)
     {
         var (i1, i2, i3) = triangle;
-        i1 = ProcessVertexIndexForTriangles(i1);
-        i2 = ProcessVertexIndexForTriangles(i2);
-        i3 = ProcessVertexIndexForTriangles(i3);
+        i1 = _smoothingVertexProcessor.ProcessVertexIndexForTriangles(i1);
+        i2 = _smoothingVertexProcessor.ProcessVertexIndexForTriangles(i2);
+        i3 = _smoothingVertexProcessor.ProcessVertexIndexForTriangles(i3);
         _triangles.Add((i1, i2, i3));
-    }
-
-    int ProcessVertexIndexForTriangles(int index)
-    {
-        if (!SmoothingSettings.ConfigureSmoothingAngle)
-            return index;
-        
-        if (!_usedIndices.Contains(index))
-        {
-            _usedIndices.Add(index);
-            return index;
-        }
-
-        _vertices.Add(_vertices[index]);
-        return _vertices.Count - 1;
     }
 
     #endregion
@@ -138,7 +127,7 @@ public sealed class IcosphereBuilder
 
         // Key for the given pair of indices
         static int IndexPairToKey(int i1, int i2)
-          => i1 < i2 ?  i1 | (i2 << 16) : (i1 << 16) | i2;
+            => i1 < i2 ? i1 | (i2 << 16) : (i1 << 16) | i2;
 
         // Constructor
         public MidpointTable(List<float3> vertices)
