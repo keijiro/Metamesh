@@ -18,6 +18,8 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
     SerializedProperty _icosphere;
     SerializedProperty _cylinder;
     SerializedProperty _roundedBox;
+    SerializedProperty _ring;
+    SerializedProperty _disc;
 
     public override void OnEnable()
     {
@@ -29,6 +31,8 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
         _icosphere  = serializedObject.FindProperty("_icosphere");
         _cylinder   = serializedObject.FindProperty("_cylinder");
         _roundedBox = serializedObject.FindProperty("_roundedBox");
+        _ring       = serializedObject.FindProperty("_ring");
+        _disc       = serializedObject.FindProperty("_disc");
     }
 
     public override void OnInspectorGUI()
@@ -45,6 +49,8 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
             case Shape.Icosphere : EditorGUILayout.PropertyField(_icosphere);  break;
             case Shape.Cylinder  : EditorGUILayout.PropertyField(_cylinder);   break;
             case Shape.RoundedBox: EditorGUILayout.PropertyField(_roundedBox); break;
+            case Shape.Ring      : EditorGUILayout.PropertyField(_ring);       break;
+            case Shape.Disc      : EditorGUILayout.PropertyField(_disc);       break;
         }
 
         serializedObject.ApplyModifiedProperties();
