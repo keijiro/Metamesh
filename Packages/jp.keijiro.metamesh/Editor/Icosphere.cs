@@ -1,7 +1,7 @@
 using System.Linq;
+using Metamesh.Smoothing;
 using UnityEngine;
 using UnityEngine.Rendering;
-using Unity.Mathematics;
 
 namespace Metamesh {
 
@@ -10,10 +10,11 @@ public sealed class Icosphere
 {
     public float Radius = 1;
     public uint Subdivision = 2;
+    public SmoothingSettings SmoothingSettings;
 
     public void Generate(Mesh mesh)
     {
-        var builder = new IcosphereBuilder();
+        var builder = new IcosphereBuilder(SmoothingSettings);
         for (var i = 1; i < Subdivision; i++)
             builder = new IcosphereBuilder(builder);
 
@@ -23,8 +24,9 @@ public sealed class Icosphere
 
         if (builder.VertexCount > 65535) mesh.indexFormat = IndexFormat.UInt32;
         mesh.SetVertices(vtx.ToList());
-        mesh.SetNormals(nrm.ToList());
+
         mesh.SetIndices(idx.ToList(), MeshTopology.Triangles, 0);
+        mesh.WriteNormals(SmoothingSettings, m => m.SetNormals(nrm.ToList()));
     }
 }
 

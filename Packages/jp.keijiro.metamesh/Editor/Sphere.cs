@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Metamesh.Smoothing;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Unity.Mathematics;
@@ -13,6 +14,7 @@ public class Sphere
     public uint Columns = 24;
     public uint Rows = 12;
     public Axis Axis = Axis.Y;
+    public SmoothingSettings SmoothingSettings;
 
     public void Generate(Mesh mesh)
     {
@@ -59,6 +61,7 @@ public class Sphere
         // Index array
         var idx = new List<int>();
         var i = 0;
+        var smoothingVertexProcessor = new SmoothingProcessorUv<float3, float2>(SmoothingSettings, vtx, uv0);
 
         for (var iy = 0; iy < res.y; iy++, i++)
         {
@@ -66,16 +69,16 @@ public class Sphere
             {
                 if (iy > 0)
                 {
-                    idx.Add(i);
-                    idx.Add(i + res.x + 1);
-                    idx.Add(i + 1);
+                    smoothingVertexProcessor.AddIndex(idx, i);
+                    smoothingVertexProcessor.AddIndex(idx, i + res.x + 1);
+                    smoothingVertexProcessor.AddIndex(idx, i + 1);
                 }
 
                 if (iy < res.y - 1)
                 {
-                    idx.Add(i + 1);
-                    idx.Add(i + res.x + 1);
-                    idx.Add(i + res.x + 2);
+                    smoothingVertexProcessor.AddIndex(idx, i + 1);
+                    smoothingVertexProcessor.AddIndex(idx, i + res.x + 1);
+                    smoothingVertexProcessor.AddIndex(idx, i + res.x + 2);
                 }
             }
         }
@@ -83,9 +86,9 @@ public class Sphere
         // Mesh object construction
         if (vtx.Count > 65535) mesh.indexFormat = IndexFormat.UInt32;
         mesh.SetVertices(vtx.Select(v => (Vector3)v).ToList());
-        mesh.SetNormals(nrm.Select(v => (Vector3)v).ToList());
         mesh.SetUVs(0, uv0.Select(v => (Vector2)v).ToList());
         mesh.SetIndices(idx, MeshTopology.Triangles, 0);
+        mesh.WriteNormals(SmoothingSettings, m => m.SetNormals(nrm.Select(v => (Vector3)v).ToList()));
     }
 }
 
