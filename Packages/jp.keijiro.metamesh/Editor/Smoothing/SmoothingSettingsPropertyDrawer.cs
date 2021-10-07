@@ -1,8 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Metamesh.Smoothing
-{
+namespace Metamesh.Smoothing {
 
 [CustomPropertyDrawer(typeof(SmoothingSettings))]
 public class SmoothingSettingsPropertyDrawer : PropertyDrawer

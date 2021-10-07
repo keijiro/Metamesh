@@ -3,8 +3,7 @@ using Metamesh.Smoothing;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace Metamesh
-{
+namespace Metamesh {
 
 [System.Serializable]
 public sealed class Icosphere

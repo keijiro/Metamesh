@@ -5,8 +5,7 @@ using System.Linq;
 using Metamesh.Smoothing;
 using UnityEngine;
 
-namespace Metamesh
-{
+namespace Metamesh {
 
 public sealed class IcosphereBuilder
 {

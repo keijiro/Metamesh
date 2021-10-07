@@ -6,8 +6,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 using Unity.Mathematics;
 
-namespace Metamesh
-{
+namespace Metamesh {
 
 [System.Serializable]
 public sealed class Cylinder

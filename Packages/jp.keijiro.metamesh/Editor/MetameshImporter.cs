@@ -6,8 +6,7 @@ using UnityEditor.AssetImporters;
 using UnityEditor.Experimental.AssetImporters;
 #endif
 
-namespace Metamesh
-{
+namespace Metamesh {
 
 [ScriptedImporter(1, "metamesh")]
 public sealed class MetameshImporter : ScriptedImporter

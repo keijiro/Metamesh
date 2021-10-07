@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Metamesh.Smoothing
-{
+namespace Metamesh.Smoothing {
 
 public class SmoothingProcessorUv<TVertex, TUv> : SmoothingProcessor<TVertex>
 {

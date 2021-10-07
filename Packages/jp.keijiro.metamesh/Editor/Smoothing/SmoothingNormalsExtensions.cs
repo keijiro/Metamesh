@@ -1,8 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Metamesh.Smoothing
-{
+namespace Metamesh.Smoothing {
 
 public static class SmoothingNormalsExtensions
 {

@@ -17,8 +17,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Metamesh
-{
+namespace Metamesh {
 
 public static class NormalSolver
 {
