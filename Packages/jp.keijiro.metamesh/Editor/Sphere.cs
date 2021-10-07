@@ -13,6 +13,7 @@ public class Sphere
     public uint Columns = 24;
     public uint Rows = 12;
     public Axis Axis = Axis.Y;
+    public SmoothingSettings SmoothingSettings;
 
     public void Generate(Mesh mesh)
     {
@@ -58,6 +59,7 @@ public class Sphere
 
         // Index array
         var idx = new List<int>();
+        var usedIdx = new HashSet<int>();
         var i = 0;
 
         for (var iy = 0; iy < res.y; iy++, i++)
@@ -66,16 +68,16 @@ public class Sphere
             {
                 if (iy > 0)
                 {
-                    idx.Add(i);
-                    idx.Add(i + res.x + 1);
-                    idx.Add(i + 1);
+                    AddIndex(i, idx, usedIdx, vtx, uv0);
+                    AddIndex(i + res.x + 1, idx, usedIdx, vtx, uv0);
+                    AddIndex(i + 1, idx, usedIdx, vtx, uv0);
                 }
 
                 if (iy < res.y - 1)
                 {
-                    idx.Add(i + 1);
-                    idx.Add(i + res.x + 1);
-                    idx.Add(i + res.x + 2);
+                    AddIndex(i + 1, idx, usedIdx, vtx, uv0);
+                    AddIndex(i + res.x + 1, idx, usedIdx, vtx, uv0);
+                    AddIndex(i + res.x + 2, idx, usedIdx, vtx, uv0);
                 }
             }
         }
@@ -83,9 +85,35 @@ public class Sphere
         // Mesh object construction
         if (vtx.Count > 65535) mesh.indexFormat = IndexFormat.UInt32;
         mesh.SetVertices(vtx.Select(v => (Vector3)v).ToList());
-        mesh.SetNormals(nrm.Select(v => (Vector3)v).ToList());
         mesh.SetUVs(0, uv0.Select(v => (Vector2)v).ToList());
         mesh.SetIndices(idx, MeshTopology.Triangles, 0);
+        
+        if (SmoothingSettings.ConfigureSmoothingAngle)
+            mesh.RecalculateNormals(SmoothingSettings.SmoothingAngle);
+        else
+            mesh.SetNormals(nrm.Select(v => (Vector3)v).ToList());
+    }
+
+    void AddIndex(int index, List<int> indices, HashSet<int> usedIdx, List<float3> vtx, List<float2> uv0)
+    {
+        index = ProcessVertexIndexForTriangles(index, usedIdx, vtx, uv0);
+        indices.Add(index);
+    }
+    
+    int ProcessVertexIndexForTriangles(int index, HashSet<int> usedIdx, List<float3> vtx, List<float2> uv0)
+    {
+        if (!SmoothingSettings.ConfigureSmoothingAngle)
+            return index;
+        
+        if (!usedIdx.Contains(index))
+        {
+            usedIdx.Add(index);
+            return index;
+        }
+
+        vtx.Add(vtx[index]);
+        uv0.Add(uv0[index]);
+        return vtx.Count - 1;
     }
 }
 
