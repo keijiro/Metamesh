@@ -20,6 +20,7 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
     SerializedProperty _roundedBox;
     SerializedProperty _ring;
     SerializedProperty _disc;
+    SerializedProperty _material;
 
     public override void OnEnable()
     {
@@ -33,6 +34,7 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
         _roundedBox = serializedObject.FindProperty("_roundedBox");
         _ring       = serializedObject.FindProperty("_ring");
         _disc       = serializedObject.FindProperty("_disc");
+        _material       = serializedObject.FindProperty("_material");
     }
 
     public override void OnInspectorGUI()
@@ -52,6 +54,8 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
             case Shape.Ring      : EditorGUILayout.PropertyField(_ring);       break;
             case Shape.Disc      : EditorGUILayout.PropertyField(_disc);       break;
         }
+        
+        EditorGUILayout.PropertyField(_material);
 
         serializedObject.ApplyModifiedProperties();
         ApplyRevertGUI();

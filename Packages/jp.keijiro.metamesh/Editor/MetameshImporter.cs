@@ -6,7 +6,8 @@ using UnityEditor.AssetImporters;
 using UnityEditor.Experimental.AssetImporters;
 #endif
 
-namespace Metamesh {
+namespace Metamesh
+{
 
 [ScriptedImporter(1, "metamesh")]
 public sealed class MetameshImporter : ScriptedImporter
@@ -22,6 +23,7 @@ public sealed class MetameshImporter : ScriptedImporter
     [SerializeField] RoundedBox _roundedBox = new RoundedBox();
     [SerializeField] Ring _ring = new Ring();
     [SerializeField] Disc _disc = new Disc();
+    [SerializeField] Material _material;
 
     public override void OnImportAsset(AssetImportContext context)
     {
@@ -33,7 +35,9 @@ public sealed class MetameshImporter : ScriptedImporter
 
         var meshRenderer = gameObject.AddComponent<MeshRenderer>();
         meshRenderer.sharedMaterial =
-            AssetDatabase.GetBuiltinExtraResource<Material>("Default-Diffuse.mat");
+            _material != null ?
+                _material :
+                AssetDatabase.GetBuiltinExtraResource<Material>("Default-Diffuse.mat");
 
         context.AddObjectToAsset("prefab", gameObject);
         if (mesh != null) context.AddObjectToAsset("mesh", mesh);
@@ -52,14 +56,30 @@ public sealed class MetameshImporter : ScriptedImporter
 
         switch (_shape)
         {
-            case Shape.Plane      : _plane     .Generate(mesh); break;
-            case Shape.Box        : _box       .Generate(mesh); break;
-            case Shape.Sphere     : _sphere    .Generate(mesh); break;
-            case Shape.Icosphere  : _icosphere .Generate(mesh); break;
-            case Shape.Cylinder   : _cylinder  .Generate(mesh); break;
-            case Shape.RoundedBox : _roundedBox.Generate(mesh); break;
-            case Shape.Ring       : _ring      .Generate(mesh); break;
-            case Shape.Disc       : _disc      .Generate(mesh); break;
+            case Shape.Plane :
+                _plane.Generate(mesh);
+                break;
+            case Shape.Box :
+                _box.Generate(mesh);
+                break;
+            case Shape.Sphere :
+                _sphere.Generate(mesh);
+                break;
+            case Shape.Icosphere :
+                _icosphere.Generate(mesh);
+                break;
+            case Shape.Cylinder :
+                _cylinder.Generate(mesh);
+                break;
+            case Shape.RoundedBox :
+                _roundedBox.Generate(mesh);
+                break;
+            case Shape.Ring :
+                _ring.Generate(mesh);
+                break;
+            case Shape.Disc :
+                _disc.Generate(mesh);
+                break;
         }
 
         mesh.RecalculateBounds();
