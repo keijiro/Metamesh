@@ -22,6 +22,7 @@ public sealed class MetameshImporter : ScriptedImporter
     [SerializeField] RoundedBox _roundedBox = new RoundedBox();
     [SerializeField] Ring _ring = new Ring();
     [SerializeField] Disc _disc = new Disc();
+    [SerializeField] bool _generateLightmapUVs = false;
 
     public override void OnImportAsset(AssetImportContext context)
     {
@@ -63,6 +64,7 @@ public sealed class MetameshImporter : ScriptedImporter
         }
 
         mesh.RecalculateBounds();
+        if(_generateLightmapUVs) Unwrapping.GenerateSecondaryUVSet(mesh);
         mesh.UploadMeshData(true);
 
         return mesh;
