@@ -20,6 +20,13 @@ At the moment, it only supports very basic primitive shapes.
 - Disc
 - Ring
 
+Related Project
+---------------
+
+- [Metatex] - Metadata-only texture asset importer
+
+[Metatex]: https://github.com/keijiro/Metatex
+
 How To Install
 --------------
 
