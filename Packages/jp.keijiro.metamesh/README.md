@@ -16,9 +16,11 @@ At the moment, it only supports very basic primitive shapes.
 - Sphere (UV sphere)
 - Icosphere
 - Cylinder
+- Cone
 - Rounded box
 - Disc
 - Ring
+- Cone
 
 How To Install
 --------------

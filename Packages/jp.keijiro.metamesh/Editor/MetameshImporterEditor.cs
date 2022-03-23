@@ -21,6 +21,7 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
     SerializedProperty _ring;
     SerializedProperty _disc;
     SerializedProperty _generateLightmapUVs;
+    SerializedProperty _cone;
 
     public override void OnEnable()
     {
@@ -34,6 +35,7 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
         _roundedBox = serializedObject.FindProperty("_roundedBox");
         _ring       = serializedObject.FindProperty("_ring");
         _disc       = serializedObject.FindProperty("_disc");
+        _cone      = serializedObject.FindProperty("_cone");
         _generateLightmapUVs = serializedObject.FindProperty("_generateLightmapUVs");
     }
 
@@ -53,6 +55,7 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
             case Shape.RoundedBox: EditorGUILayout.PropertyField(_roundedBox); break;
             case Shape.Ring      : EditorGUILayout.PropertyField(_ring);       break;
             case Shape.Disc      : EditorGUILayout.PropertyField(_disc);       break;
+            case Shape.Cone      : EditorGUILayout.PropertyField(_cone);       break;
         }
 
         EditorGUILayout.PropertyField(_generateLightmapUVs);

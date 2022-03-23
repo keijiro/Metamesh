@@ -19,6 +19,7 @@ At the moment, it only supports very basic primitive shapes.
 - Rounded box
 - Disc
 - Ring
+- Cone
 
 Related Project
 ---------------

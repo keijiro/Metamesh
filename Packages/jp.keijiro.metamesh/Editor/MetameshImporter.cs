@@ -23,6 +23,7 @@ public sealed class MetameshImporter : ScriptedImporter
     [SerializeField] Ring _ring = new Ring();
     [SerializeField] Disc _disc = new Disc();
     [SerializeField] bool _generateLightmapUVs = false;
+    [SerializeField] Cone _cone = new Cone();
 
     public override void OnImportAsset(AssetImportContext context)
     {
@@ -61,6 +62,7 @@ public sealed class MetameshImporter : ScriptedImporter
             case Shape.RoundedBox : _roundedBox.Generate(mesh); break;
             case Shape.Ring       : _ring      .Generate(mesh); break;
             case Shape.Disc       : _disc      .Generate(mesh); break;
+            case Shape.Cone       : _cone      .Generate(mesh); break;
         }
 
         mesh.RecalculateBounds();
