@@ -137,4 +137,4 @@ public sealed class IcosphereBuilder
     #endregion
 }
 
-}
+} // namespace Metamesh

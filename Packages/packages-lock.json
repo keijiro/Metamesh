@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "com.unity.mathematics": {
+      "version": "1.2.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "jp.keijiro.metamesh": {
+      "version": "file:jp.keijiro.metamesh",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.1"
+      }
+    }
+  }
+}

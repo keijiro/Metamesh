@@ -17,6 +17,10 @@ At the moment, it only supports very basic primitive shapes.
 - Icosphere
 - Cylinder
 - Cone
+- Rounded box
+- Disc
+- Ring
+- Cone
 
 How To Install
 --------------
@@ -39,7 +43,7 @@ To the `scopedRegistries` section:
 To the `dependencies` section:
 
 ```
-"jp.keijiro.metamesh": "0.0.7"
+"jp.keijiro.metamesh": "1.0.1"
 ```
 
 After changes, the manifest file should look like below:
@@ -54,6 +58,6 @@ After changes, the manifest file should look like below:
     }
   ],
   "dependencies": {
-    "jp.keijiro.metamesh": "0.0.7",
+    "jp.keijiro.metamesh": "1.0.1",
 ...
 ```

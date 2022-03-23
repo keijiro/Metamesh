@@ -16,7 +16,17 @@ At the moment, it only supports very basic primitive shapes.
 - Sphere (UV sphere)
 - Icosphere
 - Cylinder
+- Rounded box
+- Disc
+- Ring
 - Cone
+
+Related Project
+---------------
+
+- [Metatex] - Metadata-only texture asset importer
+
+[Metatex]: https://github.com/keijiro/Metatex
 
 How To Install
 --------------
@@ -39,7 +49,7 @@ To the `scopedRegistries` section:
 To the `dependencies` section:
 
 ```
-"jp.keijiro.metamesh": "0.0.7"
+"jp.keijiro.metamesh": "1.0.1"
 ```
 
 After changes, the manifest file should look like below:
@@ -54,6 +64,6 @@ After changes, the manifest file should look like below:
     }
   ],
   "dependencies": {
-    "jp.keijiro.metamesh": "0.0.7",
+    "jp.keijiro.metamesh": "1.0.1",
 ...
 ```
