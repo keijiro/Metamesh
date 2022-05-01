@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.Rendering;
 #if UNITY_2020_2_OR_NEWER
 using UnityEditor.AssetImporters;
 #else
@@ -32,9 +33,11 @@ public sealed class MetameshImporter : ScriptedImporter
         var meshFilter = gameObject.AddComponent<MeshFilter>();
         meshFilter.sharedMesh = mesh;
 
+        var pipelineAsset = GraphicsSettings.currentRenderPipeline;
+        var baseMaterial = pipelineAsset ? pipelineAsset.defaultMaterial : AssetDatabase.GetBuiltinExtraResource<Material>("Default-Diffuse.mat");
+        
         var meshRenderer = gameObject.AddComponent<MeshRenderer>();
-        meshRenderer.sharedMaterial =
-            AssetDatabase.GetBuiltinExtraResource<Material>("Default-Diffuse.mat");
+        meshRenderer.sharedMaterial = baseMaterial;
 
         context.AddObjectToAsset("prefab", gameObject);
         if (mesh != null) context.AddObjectToAsset("mesh", mesh);
