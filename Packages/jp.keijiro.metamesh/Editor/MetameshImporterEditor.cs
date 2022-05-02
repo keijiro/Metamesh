@@ -21,6 +21,7 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
     SerializedProperty _ring;
     SerializedProperty _disc;
     SerializedProperty _generateLightmapUVs;
+    SerializedProperty _readWriteMeshes;
 
     public override void OnEnable()
     {
@@ -35,6 +36,7 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
         _ring       = serializedObject.FindProperty("_ring");
         _disc       = serializedObject.FindProperty("_disc");
         _generateLightmapUVs = serializedObject.FindProperty("_generateLightmapUVs");
+        _readWriteMeshes = serializedObject.FindProperty("_readWriteMeshes");
     }
 
     public override void OnInspectorGUI()
@@ -56,6 +58,7 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
         }
 
         EditorGUILayout.PropertyField(_generateLightmapUVs);
+        EditorGUILayout.PropertyField(_readWriteMeshes);
 
         serializedObject.ApplyModifiedProperties();
         ApplyRevertGUI();
