@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.Rendering;
+using System.IO;
 #if UNITY_2020_2_OR_NEWER
 using UnityEditor.AssetImporters;
 #else
@@ -53,7 +54,8 @@ public sealed class MetameshImporter : ScriptedImporter
     Mesh ImportAsMesh(string path)
     {
         var mesh = new Mesh();
-        mesh.name = "Mesh";
+        string name = Path.GetFileNameWithoutExtension(path);
+        mesh.name = name;
 
         switch (_shape)
         {
