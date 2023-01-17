@@ -17,8 +17,9 @@ At the moment, it only supports very basic primitive shapes.
 - Icosphere
 - Cylinder
 - Rounded box
-- Disc
 - Ring
+- Disc
+- Teapot
 
 Related Project
 ---------------
