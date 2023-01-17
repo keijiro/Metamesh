@@ -23,6 +23,7 @@ public sealed class MetameshImporter : ScriptedImporter
     [SerializeField] RoundedBox _roundedBox = new RoundedBox();
     [SerializeField] Ring _ring = new Ring();
     [SerializeField] Disc _disc = new Disc();
+    [SerializeField] Teapot _teapot = new Teapot();
     [SerializeField] bool _generateLightmapUVs = false;
     [SerializeField] bool _readWriteMeshes = false;
 
@@ -65,6 +66,7 @@ public sealed class MetameshImporter : ScriptedImporter
             case Shape.RoundedBox : _roundedBox.Generate(mesh); break;
             case Shape.Ring       : _ring      .Generate(mesh); break;
             case Shape.Disc       : _disc      .Generate(mesh); break;
+            case Shape.Teapot     : _teapot    .Generate(mesh); break;
         }
 
         mesh.RecalculateBounds();
