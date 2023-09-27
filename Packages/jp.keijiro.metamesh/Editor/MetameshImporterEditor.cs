@@ -21,6 +21,7 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
     SerializedProperty _ring;
     SerializedProperty _disc;
     SerializedProperty _teapot;
+    SerializedProperty _triangle;
     SerializedProperty _generateLightmapUVs;
     SerializedProperty _readWriteMeshes;
 
@@ -37,6 +38,7 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
         _ring       = serializedObject.FindProperty("_ring");
         _disc       = serializedObject.FindProperty("_disc");
         _teapot     = serializedObject.FindProperty("_teapot");
+        _triangle   = serializedObject.FindProperty("_triangle");
         _generateLightmapUVs = serializedObject.FindProperty("_generateLightmapUVs");
         _readWriteMeshes = serializedObject.FindProperty("_readWriteMeshes");
     }
@@ -58,6 +60,7 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
             case Shape.Ring      : EditorGUILayout.PropertyField(_ring);       break;
             case Shape.Disc      : EditorGUILayout.PropertyField(_disc);       break;
             case Shape.Teapot    : EditorGUILayout.PropertyField(_teapot);     break;
+            case Shape.Triangle  : EditorGUILayout.PropertyField(_triangle);   break;
         }
 
         EditorGUILayout.PropertyField(_generateLightmapUVs);

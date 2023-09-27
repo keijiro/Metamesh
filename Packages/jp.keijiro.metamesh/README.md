@@ -20,6 +20,7 @@ At the moment, it only supports very basic primitive shapes.
 - Ring
 - Disc
 - Teapot
+- Triangle
 
 Related Project
 ---------------
