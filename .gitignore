@@ -10,6 +10,7 @@ Desktop.ini
 /.vscode
 /*.csproj
 /*.sln
+/*.tgz
 *.swp
 *.vcxproj.user
 

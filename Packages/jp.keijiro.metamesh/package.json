@@ -1,13 +1,14 @@
 {
+  "name": "jp.keijiro.metamesh",
+  "version": "1.2.0",
+  "displayName": "Metamesh",
+  "description": "Metadata-only mesh data importer",
+  "unity": "2022.3",
   "author": "Keijiro Takahashi",
   "dependencies": { "com.unity.mathematics": "1.2.1" },
-  "description": "Metadata-only mesh data importer",
-  "displayName": "Metamesh",
-  "keywords": [ "unity" ],
+  "changelogUrl": "https://github.com/keijiro/Metamesh/blob/master/CHANGELOG.md",
+  "documentationUrl": "https://github.com/keijiro/Metamesh",
+  "licensesUrl": "https://github.com/keijiro/Metamesh/blob/master/LICENSE",
   "license": "Unlicense",
-  "name": "jp.keijiro.metamesh",
-  "repository": "github:keijiro/Metamesh",
-  "unity": "2019.4",
-  "unityRelease": "0f1",
-  "version": "1.2.0"
+  "_upm": { "changelog": "" }
 }
