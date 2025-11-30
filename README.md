@@ -1,15 +1,13 @@
-Metamesh
-========
+# Metamesh
 
 ![gif](https://i.imgur.com/4ldi2dH.gif)
 ![gif](https://i.imgur.com/GXz7Q41.gif)
 
-**Metamesh** is a Unity package that generates primitive meshes. It works as a
-custom asset importer but doesn't import anything from an input file. Instead
-of importing a file, it reads properties from a metafile and procedurally
-generates a mesh.
+**Metamesh** is a Unity package that generates primitive meshes. It acts as a
+custom asset importer: Instead of pulling data from an input file, it reads
+properties from a metafile and procedurally builds a mesh.
 
-At the moment, it only supports very basic primitive shapes.
+It currently provides the following shape generators:
 
 - Plane
 - Box
@@ -22,29 +20,19 @@ At the moment, it only supports very basic primitive shapes.
 - Teapot
 - Triangle
 
-Related Project
----------------
+## Related Project
 
-- [Metatex] - Metadata-only texture asset importer
+- [Metatex] - Texture asset generator
+- [Metawire] - Wireframe mesh asset generator
 
 [Metatex]: https://github.com/keijiro/Metatex
+[Metawire]: https://github.com/keijiro/Metawire
 
-How To Install
---------------
+## Installation
 
-This package uses the [scoped registry] feature to resolve package
-dependencies. Open the Package Manager page in the Project Settings window and
-add the following entry to the Scoped Registries list:
+You can install the Metamesh package (`jp.keijiro.metamesh`) via the "Keijiro"
+scoped registry using the Unity Package Manager. To add the registry to your
+project, follow [these instructions].
 
-- Name: `Keijiro`
-- URL: `https://registry.npmjs.com`
-- Scope: `jp.keijiro`
-
-![Scoped Registry](https://user-images.githubusercontent.com/343936/162576797-ae39ee00-cb40-4312-aacd-3247077e7fa1.png)
-
-Now you can install the package from My Registries page in the Package Manager
-window.
-
-![My Registries](https://user-images.githubusercontent.com/343936/162576825-4a9a443d-62f9-48d3-8a82-a3e80b486f04.png)
-
-[scoped registry]: https://docs.unity3d.com/Manual/upm-scoped.html
+[these instructions]:
+  https://gist.github.com/keijiro/f8c7e8ff29bfe63d86b888901b82644c
