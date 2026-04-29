@@ -18,7 +18,7 @@ public sealed class Cylinder
     public Axis Axis = Axis.Y;
     public bool Caps = true;
 
-    public void Generate(Mesh mesh)
+public void Generate(Mesh mesh, float3 pivot)
     {
         // Parameter sanitization
         var res = math.int2((int)Columns, (int)Rows);
@@ -134,6 +134,9 @@ public sealed class Cylinder
             idx.Add(i + 3);
             idx.Add(i + 1 + res.x * 2);
         }
+
+        for (int v = 0; v < vtx.Count; v++)
+            vtx[v] -= pivot;
 
         // Mesh object construction
         if (vtx.Count > 65535) mesh.indexFormat = IndexFormat.UInt32;

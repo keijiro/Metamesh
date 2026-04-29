@@ -10,7 +10,7 @@ public class Teapot
 {
     public int Subdivision = 10;
 
-    public void Generate(Mesh mesh)
+public void Generate(Mesh mesh, float3 pivot)
     {
         var P = Patches;
 
@@ -35,7 +35,7 @@ public class Teapot
                     var du = p.d;
                     var dv = Bezier(c0.d, c1.d, c2.d, c3.d, v);
                     if (math.length(dv) < math.FLT_MIN_NORMAL) dv = c1.d;
-                    vtx.Add(p.p);
+                    vtx.Add(p.p - pivot);
                     nrm.Add(math.normalize(math.cross(du, dv)));
                     uv0.Add(math.float2(u, v));
                 }

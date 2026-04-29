@@ -14,7 +14,7 @@ public class Sphere
     public uint Rows = 12;
     public Axis Axis = Axis.Y;
 
-    public void Generate(Mesh mesh)
+public void Generate(Mesh mesh, float3 pivot)
     {
         // Parameter sanitization
         var res = math.int2((int)Columns, (int)Rows);
@@ -79,6 +79,9 @@ public class Sphere
                 }
             }
         }
+
+        for (int v = 0; v < vtx.Count; v++)
+            vtx[v] -= pivot;
 
         // Mesh object construction
         if (vtx.Count > 65535) mesh.indexFormat = IndexFormat.UInt32;

@@ -15,7 +15,7 @@ public sealed class Disc
     public Axis Axis = Axis.Z;
     public bool DoubleSided = false;
 
-    public void Generate(Mesh mesh)
+public void Generate(Mesh mesh, float3 pivot)
     {
         // Axis selection
         var X = float3.zero;
@@ -66,6 +66,9 @@ public sealed class Disc
                 idx.Add(n + 1 + i);
             }
         }
+
+        for (int v = 0; v < vtx.Count; v++)
+            vtx[v] -= pivot;
 
         // Mesh object construction
         if (vtx.Count > 65535) mesh.indexFormat = IndexFormat.UInt32;
