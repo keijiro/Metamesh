@@ -1,6 +1,6 @@
 {
   "name": "jp.keijiro.metamesh",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "displayName": "Metamesh",
   "description": "Metadata-only mesh data importer",
   "unity": "2022.3",
@@ -10,5 +10,5 @@
   "documentationUrl": "https://github.com/keijiro/Metamesh",
   "licensesUrl": "https://github.com/keijiro/Metamesh/blob/master/LICENSE",
   "license": "Unlicense",
-  "_upm": { "changelog": "<b>Added</b><br>- Added signing for Unity 6.3." }
+  "_upm": { "changelog": "<b>Fixed</b><br>- Fixed a compatibility issue with Unity 6.5." }
 }
