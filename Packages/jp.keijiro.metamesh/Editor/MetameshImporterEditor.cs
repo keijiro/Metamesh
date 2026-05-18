@@ -72,8 +72,11 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
 
     [MenuItem("Assets/Create/Metamesh")]
     public static void CreateNewAsset()
-      => ProjectWindowUtil.CreateAssetWithContent
-           ("New Metamesh.metamesh", "");
+#if UNITY_6000_5_OR_NEWER
+      => ProjectWindowUtil.CreateAssetWithTextContent("New Metamesh.metamesh", "");
+#else
+      => ProjectWindowUtil.CreateAssetWithContent("New Metamesh.metamesh", "");
+#endif
 }
 
 } // namespace Metamesh
