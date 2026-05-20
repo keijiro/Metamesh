@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.Rendering;
@@ -25,6 +26,7 @@ public sealed class MetameshImporter : ScriptedImporter
     [SerializeField] Disc _disc = new Disc();
     [SerializeField] Teapot _teapot = new Teapot();
     [SerializeField] Triangle _triangle = new Triangle();
+    [SerializeField] float3 _pivot = float3.zero;
     [SerializeField] bool _generateLightmapUVs = false;
     [SerializeField] bool _readWriteMeshes = false;
 
@@ -59,16 +61,16 @@ public sealed class MetameshImporter : ScriptedImporter
 
         switch (_shape)
         {
-            case Shape.Plane      : _plane     .Generate(mesh); break;
-            case Shape.Box        : _box       .Generate(mesh); break;
-            case Shape.Sphere     : _sphere    .Generate(mesh); break;
-            case Shape.Icosphere  : _icosphere .Generate(mesh); break;
-            case Shape.Cylinder   : _cylinder  .Generate(mesh); break;
-            case Shape.RoundedBox : _roundedBox.Generate(mesh); break;
-            case Shape.Ring       : _ring      .Generate(mesh); break;
-            case Shape.Disc       : _disc      .Generate(mesh); break;
-            case Shape.Teapot     : _teapot    .Generate(mesh); break;
-            case Shape.Triangle   : _triangle  .Generate(mesh); break;
+            case Shape.Plane      : _plane     .Generate(mesh, _pivot); break;
+            case Shape.Box        : _box       .Generate(mesh, _pivot); break;
+            case Shape.Sphere     : _sphere    .Generate(mesh, _pivot); break;
+            case Shape.Icosphere  : _icosphere .Generate(mesh, _pivot); break;
+            case Shape.Cylinder   : _cylinder  .Generate(mesh, _pivot); break;
+            case Shape.RoundedBox : _roundedBox.Generate(mesh, _pivot); break;
+            case Shape.Ring       : _ring      .Generate(mesh, _pivot); break;
+            case Shape.Disc       : _disc      .Generate(mesh, _pivot); break;
+            case Shape.Teapot     : _teapot    .Generate(mesh, _pivot); break;
+            case Shape.Triangle   : _triangle  .Generate(mesh, _pivot); break;
         }
 
         mesh.RecalculateBounds();

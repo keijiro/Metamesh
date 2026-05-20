@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections.Generic;
@@ -52,7 +53,7 @@ public class RoundedBox
         return vtx;
     }
 
-    public void Generate(Mesh mesh)
+public void Generate(Mesh mesh, float3 pivot)
     {
         var vc_edge = 2 + Divisions * 2;
 
@@ -86,6 +87,9 @@ public class RoundedBox
             }
             i += vc_edge;
         }
+
+        for (int v = 0; v < vtx.Count; v++)
+            vtx[v] = new ValueTuple<float3, float3, float2>() {Item1 = vtx[v].p-pivot, Item2 = vtx[v].n, Item3 = vtx[v].uv};
 
         // Mesh object construction
         if (vtx.Count > 65535) mesh.indexFormat = IndexFormat.UInt32;

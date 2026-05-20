@@ -14,7 +14,7 @@ public class Plane
     public Axis Axis = Axis.Y;
     public bool DoubleSided = false;
 
-    public void Generate(Mesh mesh)
+    public void Generate(Mesh mesh, float3 pivot)
     {
         // Parameter sanitization
         var res = (int2)math.max(2, Subdivisions);
@@ -102,6 +102,9 @@ public class Plane
                 }
             }
         }
+
+        for (int v = 0; v < vtx.Count; v++)
+            vtx[v] -= pivot;
 
         // Mesh object construction
         if (vtx.Count > 65535) mesh.indexFormat = IndexFormat.UInt32;

@@ -16,7 +16,7 @@ public sealed class Ring
     public Axis Axis = Axis.Z;
     public bool DoubleSided = false;
 
-    public void Generate(Mesh mesh)
+public void Generate(Mesh mesh, float3 pivot)
     {
         // Parameter sanitization
         var ext = math.min(Radius, Width / 2);
@@ -40,8 +40,8 @@ public sealed class Ring
             var (x, y) = (math.cos(phi), math.sin(phi));
 
             var v = x * X + y * Y;
-            vtx.Add(v * (Radius - ext));
-            vtx.Add(v * (Radius + ext));
+            vtx.Add(v * (Radius - ext) - pivot);
+            vtx.Add(v * (Radius + ext) - pivot);
             uv0.Add(math.float2(-x, y) / 2 * i_div_o + 0.5f);
             uv0.Add(math.float2(-x, y) / 2 + 0.5f);
         }

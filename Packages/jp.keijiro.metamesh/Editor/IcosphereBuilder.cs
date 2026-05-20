@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Unity.Mathematics;
+﻿using Unity.Mathematics;
 using System.Collections.Generic;
 using System.Linq;
 

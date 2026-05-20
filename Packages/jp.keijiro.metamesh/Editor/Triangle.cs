@@ -11,9 +11,9 @@ public sealed class Triangle
     public float3 Vertex3 = math.float3(1, 0, 0);
     public bool DoubleSided = false;
 
-    public void Generate(Mesh mesh)
+public void Generate(Mesh mesh, float3 pivot)
     {
-        var (v1, v2, v3) = (Vertex1, Vertex2, Vertex3);
+        var (v1, v2, v3) = (Vertex1 - pivot, Vertex2 - pivot, Vertex3 - pivot);
         var uv1 = Vector3.right;
         var uv2 = Vector3.up;
         var uv3 = Vector3.forward;

@@ -11,7 +11,7 @@ public class Box
     public float Height = 1;
     public float Depth = 1;
 
-    public void Generate(Mesh mesh)
+public void Generate(Mesh mesh, Vector3 pivot)
     {
         var x = Width  / 2;
         var y = Height / 2;
@@ -69,6 +69,9 @@ public class Box
         uv0.Add(t1); uv0.Add(t2); uv0.Add(t3);
 
         var idx = Enumerable.Range(0, vtx.Count).ToList();
+
+        for (int v = 0; v < vtx.Count; v++)
+            vtx[v] -= pivot;
 
         mesh.SetVertices(vtx);
         mesh.SetUVs(0, uv0);
