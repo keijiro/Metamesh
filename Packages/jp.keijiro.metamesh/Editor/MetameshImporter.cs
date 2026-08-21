@@ -21,6 +21,7 @@ public sealed class MetameshImporter : ScriptedImporter
     [SerializeField] Icosphere _icosphere = new Icosphere();
     [SerializeField] Cylinder _cylinder = new Cylinder();
     [SerializeField] RoundedBox _roundedBox = new RoundedBox();
+    [SerializeField] RoundedCylinder _roundedCylinder = new RoundedCylinder();
     [SerializeField] Ring _ring = new Ring();
     [SerializeField] Disc _disc = new Disc();
     [SerializeField] Teapot _teapot = new Teapot();
@@ -65,6 +66,7 @@ public sealed class MetameshImporter : ScriptedImporter
             case Shape.Icosphere  : _icosphere .Generate(mesh); break;
             case Shape.Cylinder   : _cylinder  .Generate(mesh); break;
             case Shape.RoundedBox : _roundedBox.Generate(mesh); break;
+            case Shape.RoundedCylinder: _roundedCylinder.Generate(mesh); break;
             case Shape.Ring       : _ring      .Generate(mesh); break;
             case Shape.Disc       : _disc      .Generate(mesh); break;
             case Shape.Teapot     : _teapot    .Generate(mesh); break;
