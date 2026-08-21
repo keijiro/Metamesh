@@ -15,6 +15,7 @@ It currently provides the following shape generators:
 - Icosphere
 - Cylinder
 - Rounded box
+- Rounded cylinder
 - Ring
 - Disc
 - Teapot

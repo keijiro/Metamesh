@@ -18,6 +18,7 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
     SerializedProperty _icosphere;
     SerializedProperty _cylinder;
     SerializedProperty _roundedBox;
+    SerializedProperty _roundedCylinder;
     SerializedProperty _ring;
     SerializedProperty _disc;
     SerializedProperty _teapot;
@@ -35,6 +36,7 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
         _icosphere  = serializedObject.FindProperty("_icosphere");
         _cylinder   = serializedObject.FindProperty("_cylinder");
         _roundedBox = serializedObject.FindProperty("_roundedBox");
+        _roundedCylinder = serializedObject.FindProperty("_roundedCylinder");
         _ring       = serializedObject.FindProperty("_ring");
         _disc       = serializedObject.FindProperty("_disc");
         _teapot     = serializedObject.FindProperty("_teapot");
@@ -57,6 +59,7 @@ sealed class MetameshImporterEditor : ScriptedImporterEditor
             case Shape.Icosphere : EditorGUILayout.PropertyField(_icosphere);  break;
             case Shape.Cylinder  : EditorGUILayout.PropertyField(_cylinder);   break;
             case Shape.RoundedBox: EditorGUILayout.PropertyField(_roundedBox); break;
+            case Shape.RoundedCylinder: EditorGUILayout.PropertyField(_roundedCylinder); break;
             case Shape.Ring      : EditorGUILayout.PropertyField(_ring);       break;
             case Shape.Disc      : EditorGUILayout.PropertyField(_disc);       break;
             case Shape.Teapot    : EditorGUILayout.PropertyField(_teapot);     break;
